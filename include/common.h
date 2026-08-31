@@ -1,0 +1,18 @@
+#ifndef COMMON_H
+#define COMMON_H
+
+#include "raylib.h"
+
+#define MAX_SIZE_STRUCT 10
+
+// Enumera as diferentes páginas do visualizador.
+typedef enum {
+    SCREEN_MENU = 0,
+    SCREEN_LIST, // 1
+    SCREEN_QUEUE, // 2
+    SCREEN_STACK // 3
+} AppScreen;
+
+bool DrawButton(Rectangle bounds, const char *text);
+
+#endif
