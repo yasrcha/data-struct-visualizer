@@ -3,7 +3,6 @@
 
 #include "common.h"
 
-
 void DrawMenuScreen(AppScreen *currentScreen);
 
 #endif

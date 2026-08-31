@@ -11,5 +11,5 @@ bool DrawButton(Rectangle bounds, const char *text) {
     int textWidth = MeasureText(text, fontSize);
     DrawText(text, bounds.x + (bounds.width - textWidth) / 2, bounds.y + (bounds.height - fontSize) / 2, fontSize, WHITE);
 
-    return 0;
+    return isHouvered && IsMouseButtonPressed(MOUSE_LEFT_BUTTON); // Retorna True só se o mouse estiver em cima do botão E o botão esquerdo do mouse for pressionado;
 }

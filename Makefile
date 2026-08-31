@@ -1,17 +1,10 @@
-CC = C:/raylib/w64devkit/bin/gcc.exe
-CFLAGS = -Wall -Iinclude
-LDFLAGS = -Llib
-LIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
-TARGET = bin/visualizer.exe
+CC = gcc
+CFLAGS = -Wall -Iinclude -Iinclude/gui
+LDFLAGS = -Llib -lraylib -lopengl32 -lgdi32 -lwinmm
 
-all: $(TARGET)
-
-$(TARGET): src/*.c
+bin/visualizer.exe: src/*.c src/gui/*.c
 	mkdir -p bin
-	$(CC) src/*.c $(CFLAGS) $(LDFLAGS) $(LIBS) -o $(TARGET)
+	$(CC) src/*.c src/gui/*.c $(CFLAGS) $(LDFLAGS) -o bin/visualizer.exe
 
-run: all
-	./$(TARGET)
-
-clean:
-	rm -f bin/*.exe
+run: bin/visualizer.exe
+	./bin/visualizer.exe

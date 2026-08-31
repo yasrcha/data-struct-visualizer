@@ -1,6 +1,10 @@
 #include "raylib.h"
-#include "../include/common.h"
-#include "gui_menu.h"
+
+#include "common.h"
+#include "../include/gui/gui_menu.h"
+#include "../include/gui/gui_list.h"
+#include "../include/gui/gui_queue.h"
+#include "../include/gui/gui_stack.h"
 
 int main(void) {
     const int screenWidth = 800;
@@ -12,14 +16,28 @@ int main(void) {
     SetWindowIcon(icon);
     SetTargetFPS(60);
 
+    ClearBackground(BLACK);
+
     AppScreen currentScreen = SCREEN_MENU;
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(DARKGRAY);
-
-        DrawMenuScreen(&currentScreen);
-
+        switch (currentScreen) {
+        case SCREEN_MENU:
+            DrawMenuScreen(&currentScreen);
+            break;
+        case SCREEN_LIST:
+            DrawListScreen(&currentScreen);
+            break;
+        case SCREEN_QUEUE:
+            DrawQueueScreen(&currentScreen);
+            break;
+        case SCREEN_STACK:
+            DrawStackScreen(&currentScreen);
+            break;
+        default:
+            break;
+        }
         EndDrawing();
     }
 
