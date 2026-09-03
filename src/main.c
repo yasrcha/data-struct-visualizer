@@ -20,6 +20,9 @@ int main(void) {
 
     AppScreen currentScreen = SCREEN_MENU;
 
+    List myList;
+    ListInit(&myList);
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         switch (currentScreen) {
@@ -27,7 +30,7 @@ int main(void) {
             DrawMenuScreen(&currentScreen);
             break;
         case SCREEN_LIST:
-            DrawListScreen(&currentScreen);
+            DrawListScreen(&currentScreen, &myList);
             break;
         case SCREEN_QUEUE:
             DrawQueueScreen(&currentScreen);

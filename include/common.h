@@ -1,9 +1,11 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include "raylib.h"
-
 #define MAX_SIZE_STRUCT 10
+
+#include "raylib.h"
+#include "list.h"
+
 
 // Enumera as diferentes páginas do visualizador.
 typedef enum {
@@ -13,6 +15,13 @@ typedef enum {
     SCREEN_STACK // 3
 } AppScreen;
 
+typedef enum {
+    ORIENTATION_HORIZONTAL,
+    ORIENTATION_VERTICAL
+} StructOrientation;
+
 bool DrawButton(Rectangle bounds, const char *text);
+int DrawValueSelector(float middlePosition, int fontSize, int limit, int height, const char *label, int *value);
+void DrawListVisualizer(const List *l, int selectedIndex, float offsetX, float availableWidth, float screenHeight);
 
 #endif

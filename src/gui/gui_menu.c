@@ -3,6 +3,8 @@
 #include "gui_menu.h"
 
 void DrawMenuScreen(AppScreen *currentScreen) {
+    ClearBackground(BLACK);
+    
     int fontSizeTitle = 40;
     int fontSizeText = 15;
 
