@@ -8,26 +8,29 @@
 void DrawListScreen(AppScreen *currentScreen, List *l) {
     ClearBackground(BLACK);
 
-    float controllerSide = GetScreenWidth() * .3; // 30% da Janela para os CONTROLLERS
-    float controllerSideMiddle = controllerSide / 2; // Meio da Parte de CONTROLLERS
-    float middleHeight = GetScreenHeight() / 2;
+    // Screen -> Size n Positions Properties
+    float windowFullWidth = GetScreenWidth();
+    float windowFullHeight = GetScreenHeight();
 
-    // Divisor Line
-    DrawLine(controllerSide, 0, controllerSide, GetScreenHeight(), WHITE);
+    float controllerSideWidth = windowFullWidth * .3; // 30% da Janela para os CONTROLLERS
+    float controllerSideCenter = controllerSideWidth / 2;
+    float windowCenterY = windowFullHeight / 2;
 
+    // Button -> Properties
     int btnWidth = 100;
     int btnHeight = 25;
     int spacing = 20;
+    Rectangle btnInsert = {controllerSideCenter - (btnWidth / 2), windowCenterY - btnHeight + 100 - spacing, btnWidth, btnHeight};
+    Rectangle btnRemove = {controllerSideCenter - (btnWidth / 2), windowCenterY - (btnHeight / 2) + 100, btnWidth, btnHeight};
+    Rectangle btnBack = {controllerSideCenter - (btnWidth / 2), windowCenterY + 100 + btnHeight + spacing, btnWidth, btnHeight};
 
-    Rectangle btnInsert = {controllerSideMiddle - (btnWidth / 2), middleHeight - btnHeight + 100 - spacing, btnWidth, btnHeight};
-    Rectangle btnRemove = {controllerSideMiddle - (btnWidth / 2), middleHeight - (btnHeight / 2) + 100, btnWidth, btnHeight};
-    Rectangle btnBack = {controllerSideMiddle - (btnWidth / 2), middleHeight + 100 + btnHeight + spacing, btnWidth, btnHeight};
+    // Divisor Line
+    DrawLine(controllerSideWidth, 0, controllerSideWidth, windowFullHeight, WHITE);
 
     static int value = 0;
     static int index = 0;
-
-    int selectedValue = DrawValueSelector(controllerSideMiddle, 20, 9999, 100, "Value: ", &value);
-    int selectedIndex = DrawValueSelector(controllerSideMiddle, 20, MAX_SIZE_STRUCT - 1, 180, "Position: ", &index);
+    int selectedValue = DrawValueSelector(controllerSideCenter, 20, 9999, 100, "Value: ", &value);
+    int selectedIndex = DrawValueSelector(controllerSideCenter, 20, MAX_SIZE_STRUCT - 1, 180, "Position: ", &index);
 
     if(DrawButton(btnInsert, "Insert")) {
         ListInsert(l, selectedValue, selectedIndex);
@@ -38,13 +41,4 @@ void DrawListScreen(AppScreen *currentScreen, List *l) {
     if(DrawButton(btnBack, "Back")) {
         *currentScreen = SCREEN_MENU;
     }
-
-    float screenW = (float)GetScreenWidth();
-    float screenH = (float)GetScreenHeight();
-
-    float panelWidth = screenW * 0.30f;       // 30% da barra de controles
-    float visualizerWidth = screenW * 0.70f;  // 70% da área de desenho
-
-    // Passa o ponteiro da lista e o índice atual selecionado no seletor "Posição:"
-    DrawListVisualizer(l, index, panelWidth, visualizerWidth, screenH);
 }

@@ -22,6 +22,5 @@ typedef enum {
 
 bool DrawButton(Rectangle bounds, const char *text);
 int DrawValueSelector(float middlePosition, int fontSize, int limit, int height, const char *label, int *value);
-void DrawListVisualizer(const List *l, int selectedIndex, float offsetX, float availableWidth, float screenHeight);
 
 #endif
