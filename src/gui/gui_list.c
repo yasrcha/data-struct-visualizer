@@ -26,7 +26,7 @@ void DrawListScreen(AppScreen *currentScreen, List *l) {
 
     // Divisor Line
     DrawLine(controllerSideWidth, 0, controllerSideWidth, windowFullHeight, WHITE);
-    
+
     // Seletores de Index e de Valores
     static int value = 1;
     static int index = 1;
@@ -47,7 +47,7 @@ void DrawListScreen(AppScreen *currentScreen, List *l) {
 
     float availableWidth = windowFullWidth * 0.70f;
 
-    DrawStructVisualizer(l->data, selectedIndex, availableWidth, controllerSideWidth, windowCenterY);
+    DrawListVisualizer(l->data, selectedIndex, availableWidth, controllerSideWidth, windowCenterY);
 
     ListStatus status = GetListStatus(l);
     char *statusMsg = "";
@@ -73,4 +73,39 @@ void DrawListScreen(AppScreen *currentScreen, List *l) {
     int textSize = MeasureText(statusMsg, 20);
     float textX = controllerSideWidth + (availableWidth - textSize) / 2;
     DrawText(statusMsg, textX, (windowCenterY + 100), 20, statusColor);
+}
+
+void DrawListVisualizer(const int *data, int selectedIndex, float availableWidth, float offSetX, float centerY) {
+    float slotSize = 48.0f;
+    float spacing = 8.0f;
+    const int fontSize = 20;
+    const int valuefontSize = fontSize + 10;
+    float totalWidth = (MAX_SIZE_STRUCT * slotSize) + ((MAX_SIZE_STRUCT - 1) * spacing);
+    float startX = offSetX + (availableWidth - totalWidth) / 2;
+    float startY = centerY - (slotSize / 2.0f);
+
+    for(int i = 0; i < MAX_SIZE_STRUCT; i++) {
+        float x = startX + i * (slotSize + spacing);
+        float y = startY;
+        Rectangle slot = {x, y, slotSize, slotSize};
+
+        DrawRectangle(x, y, slotSize, slotSize, BLUE);
+
+        const char *text = TextFormat("[%d]", i + 1);
+        float textSize = MeasureText(text, fontSize);
+        DrawText(text, x + ((slotSize - textSize) / 2), y + slotSize + spacing, fontSize, WHITE);
+
+        if(data[i] != -1) {
+            DrawRectangle(x, y, slotSize, slotSize, DARKBLUE);
+            const char *valueTxt = TextFormat("%d", data[i]);
+            float valueTxtSize = MeasureText(valueTxt, valuefontSize);
+            DrawText(valueTxt, x + ((slotSize - valueTxtSize) / 2), startY + ((slotSize - valuefontSize) / 2), valuefontSize, WHITE);
+        }
+
+         if (i + 1 == selectedIndex) {
+            DrawRectangleLinesEx(slot, 2.5f, WHITE);
+        } else {
+            DrawRectangleLinesEx(slot, 1.5f, (Color){ 80, 80, 80, 255 });
+        }
+    }
 }

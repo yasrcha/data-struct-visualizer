@@ -17,5 +17,5 @@ typedef enum {
 
 bool DrawButton(Rectangle bounds, const char *text);
 int DrawValueSelector(float middlePosition, int fontSize, int limit, int height, const char *label, int *value);
-void DrawStructVisualizer(const int *data, int selectedIndex, float availableWidth, float offSetX, float centerY);
+
 #endif
