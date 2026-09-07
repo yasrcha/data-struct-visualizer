@@ -15,12 +15,17 @@ void ListInit(List *l) {
 
 // Insere Item na Lista
 bool ListInsert(List *l, int value, int index) {
-    if(index < 0 || index >= MAX_SIZE_STRUCT || l->data[index] != -1) {
+    if(l->size >= MAX_SIZE_STRUCT || index < 0 || index > l->size) {
         return false;
     }
+
+    for(int i = l->size; i > index; i--) {
+        l->data[i] = l->data[i - 1];
+    }
+
     l->data[index] = value;
     l->size++;
-    return true;
+    return true; // Retorna True pq a função é booleana -> Se adicionar, retorna True; Se não adicionar, retorna False | Para cada retorno tem um corpotamento
 }
 
 // Remove Item da Lista
@@ -28,16 +33,23 @@ bool ListRemove(List *l, int index) {
     if (index < 0 || index >= MAX_SIZE_STRUCT || l->data[index] == -1) {
         return false;
     }
-    l->data[index] = -1;
+    for(int i = index; i < l->size - 1; i++) {
+        l->data[i] = l->data[i+1];
+    }
+
+    l->data[l->size - 1] = -1;
     l->size--;
     return true;
 }
 
-// Verifica se há index vazios ou se estão todos cheios
-bool ListStatus(List *l) {
-    if(l->size < MAX_SIZE_STRUCT) {
-        return true;
-    } else {
-        return false;
+ListStatus GetListStatus(List *l) {
+    if (l->size == 0) {
+        return LIST_EMPTY;
     }
+    if (l->size == MAX_SIZE_STRUCT) {
+        return LIST_FULL;
+    }
+    return LIST_AVAILABLE;
 }
+
+

@@ -15,12 +15,7 @@ typedef enum {
     SCREEN_STACK // 3
 } AppScreen;
 
-typedef enum {
-    ORIENTATION_HORIZONTAL,
-    ORIENTATION_VERTICAL
-} StructOrientation;
-
 bool DrawButton(Rectangle bounds, const char *text);
 int DrawValueSelector(float middlePosition, int fontSize, int limit, int height, const char *label, int *value);
-
+void DrawStructVisualizer(const int *data, int selectedIndex, float availableWidth, float offSetX, float centerY);
 #endif
