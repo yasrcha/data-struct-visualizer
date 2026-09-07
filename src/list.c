@@ -42,7 +42,7 @@ bool ListRemove(List *l, int index) {
     return true;
 }
 
-ListStatus GetListStatus(List *l) {
+StructStatus GetListStatus(List *l) {
     if (l->size == 0) {
         return LIST_EMPTY;
     }

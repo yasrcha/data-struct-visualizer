@@ -49,7 +49,7 @@ void DrawListScreen(AppScreen *currentScreen, List *l) {
 
     DrawListVisualizer(l->data, selectedIndex, availableWidth, controllerSideWidth, windowCenterY);
 
-    ListStatus status = GetListStatus(l);
+    StructStatus status = GetListStatus(l);
     char *statusMsg = "";
     Color statusColor = WHITE;
 
