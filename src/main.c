@@ -23,6 +23,9 @@ int main(void) {
     List myList;
     ListInit(&myList);
 
+    Queue myQueue;
+    QueueInit(&myQueue);
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         switch (currentScreen) {
@@ -33,7 +36,7 @@ int main(void) {
             DrawListScreen(&currentScreen, &myList);
             break;
         case SCREEN_QUEUE:
-            DrawQueueScreen(&currentScreen);
+            DrawQueueScreen(&currentScreen, &myQueue);
             break;
         case SCREEN_STACK:
             DrawStackScreen(&currentScreen);
