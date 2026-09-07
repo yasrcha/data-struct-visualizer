@@ -51,5 +51,3 @@ ListStatus GetListStatus(List *l) {
     }
     return LIST_AVAILABLE;
 }
-
-
