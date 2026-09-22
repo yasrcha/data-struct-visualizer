@@ -26,6 +26,9 @@ int main(void) {
     Queue myQueue;
     QueueInit(&myQueue);
 
+    Stack myStack;
+    StackInit(&myStack);
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         switch (currentScreen) {
@@ -39,7 +42,7 @@ int main(void) {
             DrawQueueScreen(&currentScreen, &myQueue);
             break;
         case SCREEN_STACK:
-            DrawStackScreen(&currentScreen);
+            DrawStackScreen(&currentScreen, &myStack);
             break;
         default:
             break;
