@@ -51,15 +51,15 @@ void DrawStackScreen(AppScreen *currentScreen, Stack *s) {
 
     switch (status) {
         case LIST_EMPTY:
-            statusMsg = "A lista está vazia!";
+            statusMsg = "A pilha está vazia!";
             statusColor = GREEN;
             break;
         case LIST_AVAILABLE:
-            statusMsg = "Ainda há espaços disponíveis!";
+            statusMsg = "Ainda há\nespaços\ndisponíveis!";
             statusColor = YELLOW;
             break;
         case LIST_FULL:
-            statusMsg = "A lista está cheia!";
+            statusMsg = "A pilha\nestá cheia!";
             statusColor = RED;
             break;
         default:
@@ -76,26 +76,32 @@ void DrawStackVisualizer(const int *data, float availableWidth, float offSetX, f
     float spacing = 8.0f;
     const int fontSize = 20;
     const int valuefontSize = fontSize + 10;
+
     float totalHeight = (MAX_SIZE_STRUCT * slotSize) + ((MAX_SIZE_STRUCT - 1) * spacing);
-    float startX = offSetX - (slotSize / 2.0f);
-    float startY = 0;
+    float startX = offSetX + (availableWidth - slotSize) / 2.0f;
+    float startY = centerY - (totalHeight / 2.0f); // Centralizado usando o centerY passado
 
-    for(int i = 0; i < MAX_SIZE_STRUCT; i++) {
-        float x = (offSetX + (availableWidth / 2)) - (slotSize / 2);
-        float y = startY - i * (slotSize + spacing);
-        Rectangle slot = {x, y, slotSize, slotSize};
+    for (int i = 0; i < MAX_SIZE_STRUCT; i++) {
+        float x = startX;
+        // Inversão visual: i = 0 fica na base inferior, índices maiores sobem
+        float y = startY + (MAX_SIZE_STRUCT - 1 - i) * (slotSize + spacing);
 
+        // Slot base
         DrawRectangle(x, y, slotSize, slotSize, BLUE);
 
+        // Rótulo do índice [i + 1] à direita
         const char *text = TextFormat("[%d]", i + 1);
-        float textSize = MeasureText(text, fontSize);
-        DrawText(text, x + slotSize + spacing, y + ((slotSize - textSize) / 2), fontSize, WHITE);
+        DrawText(text, x + slotSize + spacing, y + (slotSize - fontSize) / 2.0f, fontSize, WHITE);
 
-        if(data[i] != -1) {
+        // Valor empilhado
+        if (data[i] != -1) {
             DrawRectangle(x, y, slotSize, slotSize, DARKBLUE);
+
             const char *valueTxt = TextFormat("%d", data[i]);
-            float valueTxtSize = MeasureText(valueTxt, valuefontSize);
-            DrawText(valueTxt, x + (valueTxtSize / 2), y + ((slotSize - textSize) / 2), valuefontSize, WHITE);
+            float valueWidth = MeasureText(valueTxt, valuefontSize);
+
+            // Centralização exata do valor dentro do quadrado
+            DrawText(valueTxt, x + (slotSize - valueWidth) / 2.0f, y + (slotSize - valuefontSize) / 2.0f, valuefontSize, WHITE);
         }
     }
 }

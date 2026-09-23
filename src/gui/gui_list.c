@@ -102,7 +102,7 @@ void DrawListVisualizer(const int *data, int selectedIndex, float availableWidth
             DrawText(valueTxt, x + ((slotSize - valueTxtSize) / 2), startY + ((slotSize - valuefontSize) / 2), valuefontSize, WHITE);
         }
 
-         if (i + 1 == selectedIndex) {
+        if (i + 1 == selectedIndex) {
             DrawRectangleLinesEx(slot, 2.5f, WHITE);
         } else {
             DrawRectangleLinesEx(slot, 1.5f, (Color){ 80, 80, 80, 255 });
