@@ -16,7 +16,7 @@ void DrawListScreen(AppScreen *currentScreen, List *l) {
     float controllerSideCenter = controllerSideWidth / 2;
     float windowCenterY = windowFullHeight / 2;
 
-    // Button -> Properties
+    // Button -> Properties and Retangle Values
     int btnWidth = 100;
     int btnHeight = 25;
     int spacing = 20;
