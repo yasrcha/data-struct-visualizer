@@ -1,10 +1,17 @@
 CC = gcc
 CFLAGS = -Wall -Iinclude -Iinclude/gui
-LDFLAGS = -Llib -lraylib -lopengl32 -lgdi32 -lwinmm
+LDFLAGS = -Llib -lraylib -lopengl32 -lgdi32 -lwinmm -static-libgcc
 
-bin/visualizer.exe: src/*.c src/gui/*.c
+TARGET = bin/DataStructVisualizer.exe
+
+$(TARGET): src/*.c src/gui/*.c icon.o
+#                                ^^^^^^^^ adicione aqui
 	mkdir -p bin
-	$(CC) src/*.c src/gui/*.c $(CFLAGS) $(LDFLAGS) -o bin/visualizer.exe
+	$(CC) src/*.c src/gui/*.c icon.o $(CFLAGS) $(LDFLAGS) -o $(TARGET)
+#                              ^^^^^^^^ e aqui
 
-run: bin/visualizer.exe
-	./bin/visualizer.exe
+icon.o: icon.rc icon.ico
+	windres icon.rc -O coff -o icon.o
+
+run: $(TARGET)
+	./$(TARGET)   
