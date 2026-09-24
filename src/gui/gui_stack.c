@@ -10,11 +10,11 @@ void DrawStackScreen(AppScreen *currentScreen, Stack *s) {
     float windowFullWidth = GetScreenWidth();
     float windowFullHeight = GetScreenHeight();
 
-    float controllerSideWidth = windowFullWidth * .3; // 30% da Janela para os CONTROLLERS
+    float controllerSideWidth = windowFullWidth * .3; // 30% Screen -> CONTROLLERS on the Left Side
     float controllerSideCenter = controllerSideWidth / 2;
     float windowCenterY = windowFullHeight / 2;
 
-    // Button -> Properties
+    // Button -> Properties and Retangle Values
     int btnWidth = 100;
     int btnHeight = 25;
     int spacing = 20;
@@ -25,11 +25,11 @@ void DrawStackScreen(AppScreen *currentScreen, Stack *s) {
     // Divisor Line
     DrawLine(controllerSideWidth, 0, controllerSideWidth, windowFullHeight, WHITE);
 
-    // Seletores de Valores
+     // Valule Selectors
     static int value = 1;
     int selectedValue = DrawValueSelector(controllerSideCenter, 20, 9999, 100, "Value: ", &value);
 
-    // Botões de Ação -> Adiciona, Remove e volta para a tela inicial
+    // Action Buttons -> Add, Remove itens from the struct. Back Button is a Nav Button (Return to Menu Screen)
     if(DrawButton(btnInsert, "Insert")) {
         StackInsert(s, selectedValue);
     }
@@ -43,8 +43,10 @@ void DrawStackScreen(AppScreen *currentScreen, Stack *s) {
 
     float availableWidth = windowFullWidth * 0.70f;
 
+    // Draw Struct Visualizer > 70% left on the Right Side of the Screen (availableWidth)
     DrawStackVisualizer(s->data, availableWidth, controllerSideWidth, windowCenterY);
 
+    // STATUS msg Properties
     StructStatus status = GetStackStatus(s);
     char *statusMsg = "";
     Color statusColor = WHITE;
@@ -66,11 +68,11 @@ void DrawStackScreen(AppScreen *currentScreen, Stack *s) {
             break;
     };
 
-    int textSize = MeasureText(statusMsg, 20);
-    float textX = controllerSideWidth + (availableWidth - textSize) / 2;
+    // Draw Status Msg Text
     DrawText(statusMsg, (availableWidth / 2), windowCenterY - (20 / 2), 20, statusColor);
 }
 
+// Função que Desenha na Tela a Estrutura (Pilha/Stack)
 void DrawStackVisualizer(const int *data, float availableWidth, float offSetX, float centerY) {
     float slotSize = 30.0f;
     float spacing = 8.0f;
@@ -83,24 +85,19 @@ void DrawStackVisualizer(const int *data, float availableWidth, float offSetX, f
 
     for (int i = 0; i < MAX_SIZE_STRUCT; i++) {
         float x = startX;
-        // Inversão visual: i = 0 fica na base inferior, índices maiores sobem
-        float y = startY + (MAX_SIZE_STRUCT - 1 - i) * (slotSize + spacing);
+        float y = startY + (MAX_SIZE_STRUCT - 1 - i) * (slotSize + spacing); // Inverte o Desenho dos SLOTS, deixando os indices menores na base da pilha ao invés de no topo
 
-        // Slot base
         DrawRectangle(x, y, slotSize, slotSize, BLUE);
 
-        // Rótulo do índice [i + 1] à direita
         const char *text = TextFormat("[%d]", i + 1);
         DrawText(text, x + slotSize + spacing, y + (slotSize - fontSize) / 2.0f, fontSize, WHITE);
 
-        // Valor empilhado
         if (data[i] != -1) {
             DrawRectangle(x, y, slotSize, slotSize, DARKBLUE);
 
             const char *valueTxt = TextFormat("%d", data[i]);
             float valueWidth = MeasureText(valueTxt, valuefontSize);
 
-            // Centralização exata do valor dentro do quadrado
             DrawText(valueTxt, x + (slotSize - valueWidth) / 2.0f, y + (slotSize - valuefontSize) / 2.0f, valuefontSize, WHITE);
         }
     }

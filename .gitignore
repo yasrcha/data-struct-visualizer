@@ -1,7 +1,8 @@
-# Saída de compilação
+# Saídas gerada ma compilação
 bin/
 *.exe
 *.o
+icon.o
 
 # Configurações locais do editor
 .vscode/

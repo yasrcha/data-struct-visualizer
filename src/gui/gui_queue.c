@@ -14,7 +14,7 @@ void DrawQueueScreen(AppScreen *currentScreen, Queue *q) {
     float controllerSideCenter = controllerSideWidth / 2;
     float windowCenterY = windowFullHeight / 2;
 
-    // Button -> Properties
+    // Button -> Properties and Retangle Values
     int btnWidth = 100;
     int btnHeight = 25;
     int spacing = 20;
@@ -25,11 +25,11 @@ void DrawQueueScreen(AppScreen *currentScreen, Queue *q) {
     // Divisor Line
     DrawLine(controllerSideWidth, 0, controllerSideWidth, windowFullHeight, WHITE);
 
-    // Seletores de Valores
+    // Valule Selectors
     static int value = 1;
     int selectedValue = DrawValueSelector(controllerSideCenter, 20, 9999, 100, "Value: ", &value);
 
-    // Botões de Ação -> Adiciona, Remove e volta para a tela inicial
+    // Action Buttons -> Add, Remove itens from the struct. Back Button is a Nav Button (Return to Menu Screen)
     if(DrawButton(btnInsert, "Insert")) {
         QueueInsert(q, selectedValue);
     }
@@ -43,15 +43,17 @@ void DrawQueueScreen(AppScreen *currentScreen, Queue *q) {
 
     float availableWidth = windowFullWidth * 0.70f;
 
+    // Draw Struct Visualizer > 70% left on the Right Side of the Screen (availableWidth)
     DrawQueueVisualizer(q->data, availableWidth, controllerSideWidth, windowCenterY);
 
+    // STATUS msg Properties
     StructStatus status = GetQueueStatus(q);
     char *statusMsg = "";
     Color statusColor = WHITE;
 
     switch (status) {
         case LIST_EMPTY:
-            statusMsg = "A lista está vazia!";
+            statusMsg = "A fila está vazia!";
             statusColor = GREEN;
             break;
         case LIST_AVAILABLE:
@@ -59,13 +61,14 @@ void DrawQueueScreen(AppScreen *currentScreen, Queue *q) {
             statusColor = YELLOW;
             break;
         case LIST_FULL:
-            statusMsg = "A lista está cheia!";
+            statusMsg = "A fila está cheia!";
             statusColor = RED;
             break;
         default:
             break;
     };
 
+    // Draw Status Msg Text
     int textSize = MeasureText(statusMsg, 20);
     float textX = controllerSideWidth + (availableWidth - textSize) / 2;
     DrawText(statusMsg, textX, (windowCenterY + 100), 20, statusColor);
@@ -83,7 +86,6 @@ void DrawQueueVisualizer(const int *data, float availableWidth, float offSetX, f
     for(int i = 0; i < MAX_SIZE_STRUCT; i++) {
         float x = startX + i * (slotSize + spacing);
         float y = startY;
-        Rectangle slot = {x, y, slotSize, slotSize};
 
         DrawRectangle(x, y, slotSize, slotSize, BLUE);
 
