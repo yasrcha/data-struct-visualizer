@@ -14,7 +14,7 @@
 - [Instalação e Execução](#-instalação-e-execução)
 - [Como Usar](#-como-usar)
 - [Licença](#-licença)
-- [Contato](#-contato)
+- [Contato](#-autora-e-contato)
 
 ## 💡 Sobre o Projeto
 
